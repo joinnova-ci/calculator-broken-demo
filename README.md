@@ -9,7 +9,7 @@ Every function in this calculator has a bug. This repository is designed to demo
 This calculator has **10 functions** and **every single one has a bug**:
 
 - `add()` - adds an extra 1 to results
-- `subtract()` - subtracts in wrong order  
+- `subtract()` - subtracts in wrong order
 - `multiply()` - adds instead of multiplying
 - `divide()` - multiplies instead of dividing
 - `power()` - multiplies instead of exponentiation
@@ -47,6 +47,7 @@ nova fix
 ```
 
 Nova will:
+
 1. 🔍 Analyze all failing tests
 2. 🧠 Understand what each test expects vs what it gets
 3. 🔧 Generate fixes for every bug
@@ -58,4 +59,4 @@ After Nova runs, all tests should pass and every function should work correctly!
 
 ---
 
-*This demo repository showcases Nova CI-Rescue's ability to handle complex, multi-function bug fixes automatically.*
+_This demo repository showcases Nova CI-Rescue's ability to handle complex, multi-function bug fixes automatically._

@@ -202,4 +202,4 @@ Ready to stop fixing tests manually?
 
 ---
 
-_This demo is maintained by the Nova team. Questions? Reach out at support@nova-ci.com_
+_This demo is maintained by the Nova team. Questions? Reach out at support@joinnova.com_

@@ -46,6 +46,7 @@ test_calculator.py::test_max_of_two FAILED                                      
 ## The Traditional Fix
 
 Normally, you'd spend the next hour:
+
 1. Reading through each test failure
 2. Debugging each function one by one
 3. Running tests repeatedly
@@ -55,7 +56,7 @@ Normally, you'd spend the next hour:
 
 ```bash
 # 1. Clone this mess
-git clone https://github.com/seabass011/calculator-broken-demo.git
+git clone https://github.com/joinnova-ci/calculator-broken-demo.git
 cd calculator-broken-demo
 
 # 2. See the damage
@@ -86,7 +87,7 @@ Found 10 failing tests in test_calculator.py
 
 🧠 Understanding failures:
   ✗ test_addition: Expected 5, got 6
-  ✗ test_subtraction: Expected 7, got -7  
+  ✗ test_subtraction: Expected 7, got -7
   ✗ test_multiplication: Expected 12, got 7
   ✗ test_division: Expected 5, got 20
   ✗ test_power: Expected 8, got 6
@@ -144,19 +145,20 @@ Here's an actual before/after from the subtract function:
 ```python
 # BEFORE (broken)
 def subtract(a, b):
-    """Subtract b from a.""" 
+    """Subtract b from a."""
     # BUG: Subtracting in wrong order
     return b - a
 
 # AFTER (fixed by Nova)
 def subtract(a, b):
-    """Subtract b from a.""" 
+    """Subtract b from a."""
     return a - b
 ```
 
 ## Why This Matters
 
 This isn't a toy example. These are real bugs that appear in production code:
+
 - **Off-by-one errors** (our add function)
 - **Copy-paste mistakes** (divide doing multiplication)
 - **Incomplete implementations** (factorial)
@@ -166,7 +168,7 @@ In a real codebase with hundreds of files and thousands of tests, finding and fi
 
 ## Try Breaking It Yourself
 
-Want to see Nova handle your own bugs? 
+Want to see Nova handle your own bugs?
 
 1. Modify any function in `calculator.py`
 2. Run `pytest` to confirm it's broken
@@ -176,12 +178,14 @@ Want to see Nova handle your own bugs?
 ## The Math
 
 **Your team's reality:**
+
 - Average PR has 2-3 test failures
 - Each takes ~15 minutes to diagnose and fix
 - You ship 20 PRs/day across your team
 - That's **10 hours/day** fixing tests
 
 **With Nova:**
+
 - Same failures fixed in ~30 seconds each
 - That's **20 minutes/day** total
 - **You just got 9.5 hours back**
@@ -198,4 +202,4 @@ Ready to stop fixing tests manually?
 
 ---
 
-*This demo is maintained by the Nova team. Questions? Reach out at support@nova-ci.com*
+_This demo is maintained by the Nova team. Questions? Reach out at support@nova-ci.com_

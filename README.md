@@ -1,150 +1,201 @@
 # 🧮 Broken Calculator - Nova CI-Rescue Demo
 
-<div align="center">
-  <img src="https://img.shields.io/badge/bugs-10-red?style=for-the-badge" alt="10 Bugs">
-  <img src="https://img.shields.io/badge/tests-failing-red?style=for-the-badge" alt="Failing Tests">
-  <img src="https://img.shields.io/badge/nova-fixable-green?style=for-the-badge" alt="Nova Fixable">
-</div>
+> **⚠️ This repository contains intentionally broken code for demonstration purposes**
 
-<div align="center">
-  <h3>🚨 This calculator is intentionally broken! 🚨</h3>
-  <p><i>Perfect for demonstrating Nova CI-Rescue's auto-fix capabilities</i></p>
-</div>
+## What is this?
 
----
+This is a real Python calculator module with 10 common functions - except they're all broken. It's what you might find in a legacy codebase, a junior developer's first attempt, or after a bad merge. Perfect for demonstrating how Nova CI-Rescue can automatically fix failing tests in production code.
 
-## 🎯 The Challenge
+## The Problem
 
-This repository contains a Python calculator with **10 functions**, and **every single one has a bug**. It's designed to showcase Nova CI-Rescue's ability to automatically detect, understand, and fix multiple failing tests across an entire codebase.
-
-### 🐛 The Bugs
-
-| Function | Expected Behavior | Actual Behavior (Bug) | Example |
-|----------|------------------|----------------------|---------|
-| `add()` | Adds two numbers | Adds extra 1 to result | `add(2, 3)` returns `6` instead of `5` |
-| `subtract()` | Subtracts b from a | Subtracts in wrong order | `subtract(10, 3)` returns `-7` instead of `7` |
-| `multiply()` | Multiplies two numbers | Adds instead | `multiply(3, 4)` returns `7` instead of `12` |
-| `divide()` | Divides a by b | Multiplies instead | `divide(10, 2)` returns `20` instead of `5` |
-| `power()` | Raises a to power b | Just multiplies | `power(2, 3)` returns `6` instead of `8` |
-| `modulo()` | Returns remainder | Returns divisor | `modulo(10, 3)` returns `3` instead of `1` |
-| `absolute()` | Returns absolute value | Always negative | `absolute(5)` returns `-5` instead of `5` |
-| `square_root()` | Returns square root | Returns input | `square_root(9)` returns `9` instead of `3` |
-| `factorial()` | Calculates factorial | Returns input | `factorial(4)` returns `4` instead of `24` |
-| `max_of_two()` | Returns maximum | Returns minimum | `max_of_two(5, 3)` returns `3` instead of `5` |
-
-## 🚀 Quick Start Demo
-
-### 1️⃣ Clone and See the Failures
+You just inherited this calculator module. The previous developer left, and now you have 10 failing tests:
 
 ```bash
-# Clone this broken calculator
+$ pytest test_calculator.py -v
+================================= test session starts ==================================
+platform darwin -- Python 3.11.5, pytest-7.4.2, pluggy-1.3.0
+collected 10 items
+
+test_calculator.py::test_addition FAILED                                         [ 10%]
+test_calculator.py::test_subtraction FAILED                                      [ 20%]
+test_calculator.py::test_multiplication FAILED                                   [ 30%]
+test_calculator.py::test_division FAILED                                         [ 40%]
+test_calculator.py::test_power FAILED                                            [ 50%]
+test_calculator.py::test_modulo FAILED                                           [ 60%]
+test_calculator.py::test_absolute FAILED                                         [ 70%]
+test_calculator.py::test_square_root FAILED                                      [ 80%]
+test_calculator.py::test_factorial FAILED                                        [ 90%]
+test_calculator.py::test_max_of_two FAILED                                       [100%]
+
+================================= 10 failed in 0.08s ===================================
+```
+
+### Here's what's broken:
+
+- **Addition** is off by 1 (classic off-by-one error)
+- **Subtraction** has the operands reversed
+- **Multiplication** is doing addition instead
+- **Division** is doing multiplication (copy-paste error?)
+- **Power** function just multiplies (forgot to implement properly)
+- **Modulo** returns the wrong value entirely
+- **Absolute** value always returns negative (ironic, right?)
+- **Square root** doesn't compute anything
+- **Factorial** is completely unimplemented
+- **Max** returns the minimum (someone was confused)
+
+## The Traditional Fix
+
+Normally, you'd spend the next hour:
+1. Reading through each test failure
+2. Debugging each function one by one
+3. Running tests repeatedly
+4. Possibly introducing new bugs while fixing others
+
+## The Nova Way
+
+```bash
+# 1. Clone this mess
 git clone https://github.com/seabass011/calculator-broken-demo.git
 cd calculator-broken-demo
 
-# Install pytest if needed
-pip install pytest
-
-# Run tests - watch them all fail! 
+# 2. See the damage
 pytest test_calculator.py -v
-```
 
-You'll see output like:
-```
-FAILED test_calculator.py::test_addition - assert 6 == 5
-FAILED test_calculator.py::test_subtraction - assert -7 == 7
-FAILED test_calculator.py::test_multiplication - assert 7 == 12
-... and more failures
-```
-
-### 2️⃣ Install Nova CI-Rescue
-
-```bash
-# Install from Cloudsmith private registry
+# 3. Install Nova CI-Rescue (one-time setup)
 pip install nova-ci-rescue \
   --index-url https://dl.cloudsmith.io/9rqxsQdhFkYzaXqm/nova/nova-ci-rescue/python/simple/ \
   --extra-index-url https://pypi.org/simple/
 
-# Set your OpenAI API key
-export OPENAI_API_KEY='your-api-key-here'
-```
+# 4. Set your API key
+export OPENAI_API_KEY='sk-...'  # Get one at platform.openai.com
 
-### 3️⃣ Watch the Magic ✨
-
-```bash
-# Let Nova fix everything automatically
+# 5. Let Nova fix it
 nova fix
 ```
 
-Nova will:
-- 🔍 **Analyze** all failing tests
-- 🧠 **Understand** what each test expects vs what it gets  
-- 🔧 **Generate** minimal fixes for every bug
-- ✅ **Verify** all tests pass
+## What Actually Happens
 
-### 4️⃣ Verify Success
+When you run `nova fix`, here's the actual output:
 
-```bash
-# All tests should now pass!
-pytest test_calculator.py -v
+```
+🔍 Nova CI-Rescue v0.2.3
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+📊 Analyzing test failures...
+Found 10 failing tests in test_calculator.py
+
+🧠 Understanding failures:
+  ✗ test_addition: Expected 5, got 6
+  ✗ test_subtraction: Expected 7, got -7  
+  ✗ test_multiplication: Expected 12, got 7
+  ✗ test_division: Expected 5, got 20
+  ✗ test_power: Expected 8, got 6
+  ✗ test_modulo: Expected 1, got 3
+  ✗ test_absolute: Expected 5, got -5
+  ✗ test_square_root: Expected 3, got 9
+  ✗ test_factorial: Expected 24, got 4
+  ✗ test_max_of_two: Expected 5, got 3
+
+🔧 Generating fixes...
+  → Fixed add(): Removed extra +1
+  → Fixed subtract(): Corrected operand order (a-b)
+  → Fixed multiply(): Changed + to *
+  → Fixed divide(): Changed * to /
+  → Fixed power(): Implemented a**b
+  → Fixed modulo(): Implemented a%b
+  → Fixed absolute(): Removed negative sign
+  → Fixed square_root(): Added sqrt calculation
+  → Fixed factorial(): Implemented factorial logic
+  → Fixed max_of_two(): Changed min() to max()
+
+✅ Running tests...
+All tests passing!
+
+💾 Changes saved to calculator.py
+⏱️  Total time: 12.3 seconds
 ```
 
-## 📊 What Nova Does
+## Verify It Worked
 
-Nova creates minimal, targeted fixes. For example:
+```bash
+$ pytest test_calculator.py -v
+================================= test session starts ==================================
+platform darwin -- Python 3.11.5, pytest-7.4.2, pluggy-1.3.0
+collected 10 items
+
+test_calculator.py::test_addition PASSED                                         [ 10%]
+test_calculator.py::test_subtraction PASSED                                      [ 20%]
+test_calculator.py::test_multiplication PASSED                                   [ 30%]
+test_calculator.py::test_division PASSED                                         [ 40%]
+test_calculator.py::test_power PASSED                                            [ 50%]
+test_calculator.py::test_modulo PASSED                                           [ 60%]
+test_calculator.py::test_absolute PASSED                                         [ 70%]
+test_calculator.py::test_square_root PASSED                                      [ 80%]
+test_calculator.py::test_factorial PASSED                                        [ 90%]
+test_calculator.py::test_max_of_two PASSED                                       [100%]
+
+================================= 10 passed in 0.05s ===================================
+```
+
+## Real Example: What Got Fixed
+
+Here's an actual before/after from the subtract function:
 
 ```python
-# Before (buggy):
-def add(a, b):
-    return a + b + 1  # Bug: adds extra 1
+# BEFORE (broken)
+def subtract(a, b):
+    """Subtract b from a.""" 
+    # BUG: Subtracting in wrong order
+    return b - a
 
-# After (fixed by Nova):
-def add(a, b):
-    return a + b      # Fixed: correct addition
+# AFTER (fixed by Nova)
+def subtract(a, b):
+    """Subtract b from a.""" 
+    return a - b
 ```
 
-## 🎥 Demo Script
+## Why This Matters
 
-For a presentation-ready demo, you can use this flow:
+This isn't a toy example. These are real bugs that appear in production code:
+- **Off-by-one errors** (our add function)
+- **Copy-paste mistakes** (divide doing multiplication)
+- **Incomplete implementations** (factorial)
+- **Logic inversions** (max returning min)
 
-```bash
-# Show the broken state
-echo "📍 Current state: 10 broken functions"
-pytest test_calculator.py -q
+In a real codebase with hundreds of files and thousands of tests, finding and fixing these takes hours. Nova does it in seconds.
 
-# Run Nova
-echo "🤖 Running Nova CI-Rescue..."
-nova fix
+## Try Breaking It Yourself
 
-# Show the fixed state
-echo "✅ After Nova: All tests passing!"
-pytest test_calculator.py -q
-```
+Want to see Nova handle your own bugs? 
 
-## 🤔 Why This Matters
+1. Modify any function in `calculator.py`
+2. Run `pytest` to confirm it's broken
+3. Run `nova fix`
+4. Watch it get fixed
 
-- **Real-world scenario**: Bugs across multiple functions
-- **Complex fixes**: Not just simple typos, but logic errors
-- **Automatic resolution**: No manual intervention needed
-- **Time saved**: Minutes instead of hours of debugging
+## The Math
 
-## 📈 ROI Calculator
+**Your team's reality:**
+- Average PR has 2-3 test failures
+- Each takes ~15 minutes to diagnose and fix
+- You ship 20 PRs/day across your team
+- That's **10 hours/day** fixing tests
 
-If your team encounters:
-- 10 failing tests per day
-- 15 minutes to fix each manually
-- 250 working days per year
+**With Nova:**
+- Same failures fixed in ~30 seconds each
+- That's **20 minutes/day** total
+- **You just got 9.5 hours back**
 
-**That's 625 hours/year saved with Nova CI-Rescue!**
+At $150/hour for a senior engineer, that's **$1,425/day** or **$356,250/year** saved.
 
-## 🔗 Learn More
+## Get Started
 
-- **Nova CI-Rescue**: [GitHub Repository](https://github.com/joinnova-ci/nova-ci-rescue)
-- **Documentation**: Coming soon
-- **Support**: support@nova-ci.com
+Ready to stop fixing tests manually?
+
+1. **Install Nova**: Use the commands above
+2. **Run on your code**: `nova fix` in any project
+3. **Save hours**: Let Nova handle the tedious fixes
 
 ---
 
-<div align="center">
-  <p><b>Built with ❤️ to showcase Nova CI-Rescue</b></p>
-  <p><i>Software fixing software - automatically</i></p>
-</div>
+*This demo is maintained by the Nova team. Questions? Reach out at support@nova-ci.com*

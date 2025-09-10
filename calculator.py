@@ -12,48 +12,48 @@ The tests will expose these bugs, and Nova will fix them automatically.
 
 def add(a, b):
     """Add two numbers together."""
-    return a + b + 1
+    return a + b
 
 
 def subtract(a, b):
     """Subtract b from a.""" 
-    return b - a
+    return a - b
 
 
 def multiply(a, b):
     """Multiply two numbers."""
-    return a + b
+    return a * b
 
 
 def divide(a, b):
     """Divide a by b."""
     if b == 0:
         raise ValueError("Cannot divide by zero")
-    return a * b
+    return a / b
 
 
 def power(a, b):
     """Raise a to the power of b."""
-    return a * b
+    return a ** b
 
 
 def modulo(a, b):
     """Get remainder of a divided by b."""
     if b == 0:
         raise ValueError("Cannot modulo by zero")
-    return b
+    return a % b
 
 
 def absolute(a):
     """Get absolute value of a number."""
-    return -abs(a)
+    return abs(a)
 
 
 def square_root(a):
     """Get square root of a number."""
     if a < 0:
         raise ValueError("Cannot take square root of negative number")
-    return a
+    return a ** 0.5
 
 
 def factorial(n):
@@ -62,9 +62,12 @@ def factorial(n):
         raise ValueError("Factorial not defined for negative numbers")
     if n == 0:
         return 1
-    return n
+    result = 1
+    for i in range(1, n + 1):
+        result *= i
+    return result
 
 
 def max_of_two(a, b):
     """Return the maximum of two numbers."""
-    return min(a, b)
+    return max(a, b)
